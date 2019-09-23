@@ -379,8 +379,13 @@ cmd_show() {
 	local recordfile="$PREFIX/$path.gpg"
 	check_sneaky_paths "$path"
 	if [[ -f $recordfile ]]; then
-		rec="$($GPG -d "${GPG_OPTS[@]}" "$recordfile" > "$DESTINATION_PREFIX/record")" || exit $?
-		echo exported to \"~/documents/record\"
+                if [[ -f $DESTINATION_PREFIX/$path ]]; then
+			mv "$DESTINATION_PREFIX/$path" "$DESTINATION_PREFIX/$path.old"
+		fi
+		mkdir -p "$DESTINATION_PREFIX/$path"
+		rm -r "$DESTINATION_PREFIX/$path"
+		rec="$($GPG -d "${GPG_OPTS[@]}" "$recordfile" > "$DESTINATION_PREFIX/$path")" || exit $?
+		echo exported to \"~/Documents/$path\"
 		#echo "$rec" | $BASE64 -d
 	elif [[ -d $PREFIX/$path ]]; then
 		if [[ -z $path ]]; then
