@@ -285,7 +285,7 @@ cmd_usage() {
 	    $PROGRAM [ls] [subfolder]
 	        List records.
 	    $PROGRAM find record-names...
-	    	List records that match record-names.
+	        List records that match record-names.
 	    $PROGRAM [show] [--clip[=line-number],-c[line-number]] record-name
 	        Show existing record and optionally put it on the clipboard.
 	        If put on the clipboard, it will be cleared in $CLIP_TIME seconds.
@@ -343,7 +343,7 @@ cmd_init() {
 		mkdir -p "$PREFIX/$id_path"
 		printf "%s\n" "$@" > "$gpg_id"
 		local id_print="$(printf "%s, " "$@")"
-		echo "word store initialized for ${id_print%, }${id_path:+ ($id_path)}"
+		echo "record store initialized for ${id_print%, }${id_path:+ ($id_path)}"
 		git_add_file "$gpg_id" "Set GPG id to ${id_print%, }${id_path:+ ($id_path)}."
 		if [[ -n $RECORD_STORE_SIGNING_KEY ]]; then
 			local signing_keys=( ) key
@@ -384,7 +384,7 @@ cmd_show() {
 		#echo "$rec" | $BASE64 -d
 	elif [[ -d $PREFIX/$path ]]; then
 		if [[ -z $path ]]; then
-			echo "word Store"
+			echo "Record Store"
 		else
 			echo "${path%\/}"
 		fi
